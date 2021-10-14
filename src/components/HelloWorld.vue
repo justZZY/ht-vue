@@ -1,33 +1,5 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-  </div>
+  <div id="topo" class="ht-view"></div>
 </template>
 
 <script>
@@ -35,24 +7,54 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  data() {
+    return {
+      publicPath: process.env.BASE_URL
+    }
+  },
+  methods: {
+    init () {
+      let dm = new ht.DataModel()
+      let g3d = window.g3d = new ht.graph3d.Graph3dView(dm)
+      g3d.setGridVisible(true)
+      // 通过 json 对象加载
+      let model1 = {
+        "modelType": "obj",
+        "obj": "obj/equipment.obj",
+        "mtl": "obj/equipment.mtl",
+        "prefix": "obj/"
+      };
+      let node1 = new ht.Node();
+      node1.setAnchor3d([0.5, 0, 0.5]);
+      node1.p3(-200, -100, 0);
+      node1.s('shape3d', model1);
+      dm.add(node1);
+      let model2 = {
+        "modelType": "obj",
+        "obj": "obj/windmill.obj",
+        "mtl": "obj/windmill.mtl",
+        "prefix": "obj/"
+      }
+      let node2 = new ht.Node();
+      node2.setAnchor3d([0.5, 0, 0.5]);
+      node2.p3(200, 0, 0);
+      node2.s('shape3d', model2);
+      dm.add(node2);
+      g3d.addToDOM(document.getElementById("#topo"))
+    }
+  },
+  mounted() {
+    this.init()
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.ht-view {
+  position: relative;
+  width: 100%;
+  height: 1080px;
 }
 </style>

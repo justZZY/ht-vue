@@ -1,0 +1,6 @@
+{
+    "modelType": "obj",
+    "obj": "../assets/obj/equipment.obj",
+    "mtl": "../assets/obj/equipment.mtl",
+    "prefix": "obj/"
+}
