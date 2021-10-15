@@ -33,7 +33,7 @@
       "parser": "babel-eslint"
     },
     "rules": {},
-    "globals":{
+    "globals": {
       "ht": true
     }
   },
